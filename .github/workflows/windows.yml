@@ -26,7 +26,7 @@ jobs:
           args: install -y haskell-dev
       
       - name: Where is GHC?
-        run: Get-Command -All ghc
+        run: (Get-Command ghc).Source
           
       - name: current settings
         run: cat C:\ProgramData\chocolatey\lib\ghc\tools\ghc-8.10.2\lib\settings
