@@ -30,6 +30,17 @@ jobs:
       
       - name: Download the source tarball
         run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-2.16.2/darcs-2.16.2.tar.gz -O darcs-2.16.2.tar.gz
+        
+      - name: Extract source
+        run: tar -xvfz darcs-2.16.2.tar.gz
+      
+      - name: Chocolatey Action
+        # You may pin to the exact commit or the version.
+        # uses: crazy-max/ghaction-chocolatey@b6061d587628735be315d74358228b83a7dba9a7
+        uses: crazy-max/ghaction-chocolatey@v1.3.0
+        with:
+          # Arguments to pass to Chocolatey
+          args: install haskell-dev
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
