@@ -48,6 +48,7 @@ jobs:
       - name: build darcs
         run: |
           cd darcs-2.16.2
+          cabal update
           cabal build -f-curl -fstatic
 
       - uses: actions/upload-artifact@v2
