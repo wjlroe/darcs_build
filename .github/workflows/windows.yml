@@ -38,3 +38,13 @@ jobs:
              
       - name: updated settings
         run: cat C:\ProgramData\chocolatey\lib\ghc\tools\ghc-8.10.2\lib\settings
+      
+      - name: build darcs
+        run: |
+          cd darcs-2.16.2
+          cabal build -f-curl -fstatic
+          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: darcs.exe
+          path: darcs-2.16.2/dist-newstyle/build/x86_64-windows/ghc-8.10.2/darcs-2.16.1/build/Darcs/darcs.exe
