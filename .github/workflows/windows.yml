@@ -13,13 +13,13 @@ jobs:
       - uses: actions/checkout@v2
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1.0.1
-      
+
       - name: Download the source tarball
         run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-2.16.2/darcs-2.16.2.tar.gz -O darcs-2.16.2.tar.gz
-        
+
       - name: Extract source
         run: tar -xvzf darcs-2.16.2.tar.gz
-      
+
       - name: Chocolatey Action
         uses: crazy-max/ghaction-chocolatey@v1.3.0
         with:
@@ -27,28 +27,29 @@ jobs:
 
       - name: Where is GHC?
         run: (Get-Command ghc).Source
-        
+
       # C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\bin\ghc.exe
-    
+
       - name: current settings
         run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings
-        
+
       - name: Replace broken linker path in ghc
         run: |
-          Replace-FileString
-            -Pattern 'C:/GitLabRunner/builds/2WeHDSFP/0/ghc/ghc/inplace/mingw/bin/ld.exe'
-            -Replacement 'C:/ProgramData/chocolatey/lib/ghc.8.10.2/tools/ghc-8.10.2/mingw/bin/ld.exe'
-            -Path C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings
-            -Overwrite
-             
+          $brokenPath = 'C:/GitLabRunner/builds/2WeHDSFP/0/ghc/ghc/inplace/mingw/bin/ld.exe'
+          $fixedPath = 'C:/ProgramData/chocolatey/lib/ghc.8.10.2/tools/ghc-8.10.2/mingw/bin/ld.exe'
+          $settings = 'C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings'
+          $settingsBackup = $settings'_backup'
+          Move-Item $settings -Destination $settingsBackup
+          (Get-Content -Path $settingsBackup) -replace $brokenPath, $fixedPath | Add-Content -Path $settings
+
       - name: updated settings
         run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings
-      
+
       - name: build darcs
         run: |
           cd darcs-2.16.2
           cabal build -f-curl -fstatic
-          
+
       - uses: actions/upload-artifact@v2
         with:
           name: darcs.exe
