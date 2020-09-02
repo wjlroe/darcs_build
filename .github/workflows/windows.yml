@@ -32,7 +32,7 @@ jobs:
         run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-2.16.2/darcs-2.16.2.tar.gz -O darcs-2.16.2.tar.gz
         
       - name: Extract source
-        run: tar -xvfz darcs-2.16.2.tar.gz
+        run: tar -xvzf darcs-2.16.2.tar.gz
       
       - name: Chocolatey Action
         # You may pin to the exact commit or the version.
