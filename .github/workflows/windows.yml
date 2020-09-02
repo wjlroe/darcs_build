@@ -1,32 +1,18 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Build on Windows
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: windows-2019
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1.0.1
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
       
       - name: Download the source tarball
         run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-2.16.2/darcs-2.16.2.tar.gz -O darcs-2.16.2.tar.gz
@@ -35,15 +21,20 @@ jobs:
         run: tar -xvzf darcs-2.16.2.tar.gz
       
       - name: Chocolatey Action
-        # You may pin to the exact commit or the version.
-        # uses: crazy-max/ghaction-chocolatey@b6061d587628735be315d74358228b83a7dba9a7
         uses: crazy-max/ghaction-chocolatey@v1.3.0
         with:
-          # Arguments to pass to Chocolatey
-          args: install haskell-dev
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+          args: install -y haskell-dev
+          
+      - name: current settings
+        run: cat C:\ProgramData\chocolatey\lib\ghc\tools\ghc-8.10.2\lib\settings
+        
+      - name: Replace broken linker path in ghc
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          Replace-FileString
+            -Pattern 'C:/GitLabRunner/builds/2WeHDSFP/0/ghc/ghc/inplace/mingw/bin/ld.exe'
+            -Replacement 'C:/ProgramData/chocolatey/lib/ghc/tools/ghc-8.10.2/mingw/bin/ld.exe'
+            -Path C:\ProgramData\chocolatey\lib\ghc\tools\ghc-8.10.2\lib\settings
+            -Overwrite
+             
+      - name: updated settings
+        run: cat C:\ProgramData\chocolatey\lib\ghc\tools\ghc-8.10.2\lib\settings
