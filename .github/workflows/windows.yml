@@ -38,7 +38,7 @@ jobs:
           $brokenPath = 'C:/GitLabRunner/builds/2WeHDSFP/0/ghc/ghc/inplace/mingw/bin/ld.exe'
           $fixedPath = 'C:/ProgramData/chocolatey/lib/ghc.8.10.2/tools/ghc-8.10.2/mingw/bin/ld.exe'
           $settings = 'C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings'
-          $settingsBackup = $settings'_backup'
+          $settingsBackup = $settings + '_backup'
           Move-Item $settings -Destination $settingsBackup
           (Get-Content -Path $settingsBackup) -replace $brokenPath, $fixedPath | Add-Content -Path $settings
 
