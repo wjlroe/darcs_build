@@ -24,23 +24,25 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1.3.0
         with:
           args: install -y haskell-dev
-      
+
       - name: Where is GHC?
         run: (Get-Command ghc).Source
-          
+        
+      # C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\bin\ghc.exe
+    
       - name: current settings
-        run: cat C:\ProgramData\chocolatey\lib\ghc\tools\ghc-8.10.2\lib\settings
+        run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings
         
       - name: Replace broken linker path in ghc
         run: |
           Replace-FileString
             -Pattern 'C:/GitLabRunner/builds/2WeHDSFP/0/ghc/ghc/inplace/mingw/bin/ld.exe'
-            -Replacement 'C:/ProgramData/chocolatey/lib/ghc/tools/ghc-8.10.2/mingw/bin/ld.exe'
-            -Path C:\ProgramData\chocolatey\lib\ghc\tools\ghc-8.10.2\lib\settings
+            -Replacement 'C:/ProgramData/chocolatey/lib/ghc.8.10.2/tools/ghc-8.10.2/mingw/bin/ld.exe'
+            -Path C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings
             -Overwrite
              
       - name: updated settings
-        run: cat C:\ProgramData\chocolatey\lib\ghc\tools\ghc-8.10.2\lib\settings
+        run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings
       
       - name: build darcs
         run: |
