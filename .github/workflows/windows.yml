@@ -54,4 +54,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: darcs.exe
-          path: darcs-2.16.2/dist-newstyle/build/x86_64-windows/ghc-8.10.2/darcs-2.16.1/build/Darcs/darcs.exe
+          path: darcs-2.16.2/dist-newstyle/build/x86_64-windows/ghc-8.10.2/darcs-2.16.2/build/darcs/darcs.exe
