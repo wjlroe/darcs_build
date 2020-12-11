@@ -9,16 +9,18 @@ on:
 jobs:
   build:
     runs-on: windows-2019
+    env:
+      DARCS_VERSION: 2.16.2
     steps:
       - uses: actions/checkout@v2
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1.0.1
 
       - name: Download the source tarball
-        run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-2.16.2/darcs-2.16.2.tar.gz -O darcs-2.16.2.tar.gz
+        run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-$Env:DARCS_VERSION/darcs-$Env:DARCS_VERSION.tar.gz -O darcs-$Env:DARCS_VERSION.tar.gz
 
       - name: Extract source
-        run: tar -xvzf darcs-2.16.2.tar.gz
+        run: tar -xvzf darcs-$Env:DARCS_VERSION.tar.gz
 
       - name: Chocolatey Action
         uses: crazy-max/ghaction-chocolatey@v1.3.0
@@ -27,8 +29,6 @@ jobs:
 
       - name: Where is GHC?
         run: (Get-Command ghc).Source
-
-      # C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\bin\ghc.exe
 
       - name: current settings
         run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings
@@ -47,11 +47,11 @@ jobs:
 
       - name: build darcs
         run: |
-          cd darcs-2.16.2
+          cd darcs-$Env:DARCS_VERSION
           cabal update
           cabal build -f-curl -fstatic
 
       - uses: actions/upload-artifact@v2
         with:
           name: darcs.exe
-          path: darcs-2.16.2/dist-newstyle/build/x86_64-windows/ghc-8.10.2/darcs-2.16.2/build/darcs/darcs.exe
+          path: darcs-$Env:DARCS_VERSION/dist-newstyle/build/x86_64-windows/ghc-8.10.2/darcs-$Env:DARCS_VERSION/build/darcs/darcs.exe
