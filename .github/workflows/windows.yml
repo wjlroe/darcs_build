@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: setup-msbuild
-        uses: microsoft/setup-msbuild@v1.0.1
+        uses: microsoft/setup-msbuild@v1.0.2
 
       - name: Download the source tarball
         run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-$Env:DARCS_VERSION/darcs-$Env:DARCS_VERSION.tar.gz -O darcs-$Env:DARCS_VERSION.tar.gz
