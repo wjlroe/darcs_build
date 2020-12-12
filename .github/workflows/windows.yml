@@ -48,8 +48,8 @@ jobs:
       - name: build darcs
         run: |
           cd darcs-$Env:DARCS_VERSION
-          cabal update
-          cabal build -f-curl -fstatic
+          cabal v2-update
+          cabal v2-build exe:darcs -f-curl -fstatic
 
       - uses: actions/upload-artifact@v2
         with:
