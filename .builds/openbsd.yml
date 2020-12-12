@@ -13,3 +13,5 @@ tasks:
       cd darcs-$DARCS_VERSION
       cabal v2-update
       cabal v2-build
+artifacts:
+  - darcs-$DARCS_VERSION/dist-newstyle/build/x86_64-openbsd/ghc-8.6.4/darcs-$DARCS_VERSION/build/darcs/darcs
