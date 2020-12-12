@@ -31,19 +31,19 @@ jobs:
         run: (Get-Command ghc).Source
 
       - name: current settings
-        run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings
+        run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2.2\tools\ghc-8.10.2\lib\settings
 
       - name: Replace broken linker path in ghc
         run: |
           $brokenPath = 'C:/GitLabRunner/builds/2WeHDSFP/0/ghc/ghc/inplace/mingw/bin/ld.exe'
-          $fixedPath = 'C:/ProgramData/chocolatey/lib/ghc.8.10.2/tools/ghc-8.10.2/mingw/bin/ld.exe'
-          $settings = 'C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings'
+          $fixedPath = 'C:/ProgramData/chocolatey/lib/ghc.8.10.2.2/tools/ghc-8.10.2/mingw/bin/ld.exe'
+          $settings = 'C:\ProgramData\chocolatey\lib\ghc.8.10.2.2\tools\ghc-8.10.2\lib\settings'
           $settingsBackup = $settings + '_backup'
           Move-Item $settings -Destination $settingsBackup
           (Get-Content -Path $settingsBackup) -replace $brokenPath, $fixedPath | Add-Content -Path $settings
 
       - name: updated settings
-        run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2\tools\ghc-8.10.2\lib\settings
+        run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2.2\tools\ghc-8.10.2\lib\settings
 
       - name: build darcs
         run: |
