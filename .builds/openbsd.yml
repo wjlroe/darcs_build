@@ -11,5 +11,5 @@ tasks:
       curl https://hackage.haskell.org/package/darcs-$DARCS_VERSION/darcs-$DARCS_VERSION.tar.gz -o darcs-$DARCS_VERSION.tar.gz
       tar xvzf darcs-$DARCS_VERSION.tar.gz
       cd darcs-$DARCS_VERSION
-      cabal update
-      cabal build
+      cabal v2-update
+      cabal v2-build
