@@ -3,6 +3,7 @@ sources:
   - https://git.sr.ht/~willroe/darcs_build
 packages:
   - ghc
+  - cabal-install
 environment:
   DARCS_VERSION: 2.16.2
 tasks:
