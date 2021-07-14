@@ -1,11 +1,11 @@
-image: openbsd/6.8
+image: openbsd/6.9
 sources:
   - https://git.sr.ht/~willroe/darcs_build
 packages:
   - ghc
   - cabal-install
 environment:
-  DARCS_VERSION: 2.16.3
+  DARCS_VERSION: 2.16.4
 tasks:
   - build: |
       curl https://hackage.haskell.org/package/darcs-$DARCS_VERSION/darcs-$DARCS_VERSION.tar.gz -o darcs-$DARCS_VERSION.tar.gz
@@ -13,6 +13,6 @@ tasks:
       cd darcs-$DARCS_VERSION
       cabal v2-update
       cabal v2-build exe:darcs
-      cp dist-newstyle/build/x86_64-openbsd/ghc-8.6.4/darcs-$DARCS_VERSION/build/darcs/darcs ../darcs
+      cp dist-newstyle/build/x86_64-openbsd/ghc-*/darcs-$DARCS_VERSION/build/darcs/darcs ../darcs
 artifacts:
   - darcs

@@ -1,56 +1,48 @@
 name: Build on Windows
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: workflow_dispatch
 
 jobs:
   build:
     runs-on: windows-2019
     env:
-      DARCS_VERSION: 2.16.3
+      DARCS_VERSION: 2.16.4
     steps:
       - uses: actions/checkout@v2
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1.0.2
 
-      - name: Download the source tarball
-        run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-$Env:DARCS_VERSION/darcs-$Env:DARCS_VERSION.tar.gz -O darcs-$Env:DARCS_VERSION.tar.gz
-
-      - name: Extract source
-        run: tar -xvzf darcs-$Env:DARCS_VERSION.tar.gz
-
-      - name: Chocolatey Action
+      - name: Install archiver (to unpack xz files)
         uses: crazy-max/ghaction-chocolatey@v1.3.0
         with:
-          args: install -y haskell-dev
+          args: install -y archiver
 
-      - name: Where is GHC?
-        run: (Get-Command ghc).Source
+      - name: Download ghc
+        run: Invoke-WebRequest https://downloads.haskell.org/~ghc/8.10.1/ghc-8.10.1-x86_64-unknown-mingw32.tar.xz -O ghc-8.10.1.tar.xz
 
-      - name: current settings
-        run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2.2\tools\ghc-8.10.2\lib\settings
+      - name: Extract ghc
+        run: arc unarchive ghc-8.10.1.tar.xz
 
-      - name: Replace broken linker path in ghc
+      - name: Add ghc to PATH
+        run: Get-Location | Join-Path -ChildPath ghc-8.10.1\bin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: ghc details
         run: |
-          $brokenPath = 'C:/GitLabRunner/builds/2WeHDSFP/0/ghc/ghc/inplace/mingw/bin/ld.exe'
-          $fixedPath = 'C:/ProgramData/chocolatey/lib/ghc.8.10.2.2/tools/ghc-8.10.2/mingw/bin/ld.exe'
-          $settings = 'C:\ProgramData\chocolatey\lib\ghc.8.10.2.2\tools\ghc-8.10.2\lib\settings'
-          $settingsBackup = $settings + '_backup'
-          Move-Item $settings -Destination $settingsBackup
-          (Get-Content -Path $settingsBackup) -replace $brokenPath, $fixedPath | Add-Content -Path $settings
+          (Get-Command ghc).Source
+          ghc --version
 
-      - name: updated settings
-        run: cat C:\ProgramData\chocolatey\lib\ghc.8.10.2.2\tools\ghc-8.10.2\lib\settings
+      - name: Download the darcs source tarball
+        run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-$Env:DARCS_VERSION/darcs-$Env:DARCS_VERSION.tar.gz -O darcs-$Env:DARCS_VERSION.tar.gz
+
+      - name: Extract darcs source
+        run: tar -xvzf darcs-$Env:DARCS_VERSION.tar.gz
 
       - name: build darcs
         run: |
           cd darcs-$Env:DARCS_VERSION
           cabal v2-update
           cabal v2-build exe:darcs -f-curl -fstatic
-          cp dist-newstyle/build/x86_64-windows/ghc-8.10.2/darcs-$Env:DARCS_VERSION/build/darcs/darcs.exe ../darcs.exe
+          cp dist-newstyle/build/x86_64-windows/ghc-*/darcs-$Env:DARCS_VERSION/build/darcs/darcs.exe ../darcs.exe
 
       - uses: actions/upload-artifact@v2
         with:
