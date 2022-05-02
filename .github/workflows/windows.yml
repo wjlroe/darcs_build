@@ -32,6 +32,10 @@ jobs:
           (Get-Command ghc).Source
           ghc --version
 
+      - name: cabal details
+        run: |
+          (Get-Command cabal).Source
+
       - name: Download the darcs source tarball
         run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-$Env:DARCS_VERSION/darcs-$Env:DARCS_VERSION.tar.gz -O darcs-$Env:DARCS_VERSION.tar.gz
 
