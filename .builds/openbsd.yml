@@ -7,6 +7,9 @@ packages:
 environment:
   DARCS_VERSION: 2.16.5
 tasks:
+  - info: |
+      uname -a
+      ghc --version
   - build: |
       curl https://hackage.haskell.org/package/darcs-$DARCS_VERSION/darcs-$DARCS_VERSION.tar.gz -o darcs-$DARCS_VERSION.tar.gz
       tar xvzf darcs-$DARCS_VERSION.tar.gz
