@@ -4,7 +4,6 @@ sources:
 packages:
   - ghc
   - cabal
-  - cabal-install
   - curl-dev
   - ncurses-dev
   - zlib-dev
