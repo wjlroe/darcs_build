@@ -6,7 +6,9 @@ packages:
   - cabal
   - curl-dev
   - ncurses-dev
+  - ncurses-static
   - zlib-dev
+  - zlib-static
   - libffi-dev
 environment:
   DARCS_VERSION: 2.16.5
