@@ -16,6 +16,6 @@ tasks:
       cd darcs-$DARCS_VERSION
       cabal v2-update
       cabal v2-build exe:darcs -fstatic
-      cp dist-newstyle/build/x86_64-openbsd/ghc-*/darcs-$DARCS_VERSION/build/darcs/darcs ../darcs-$DARCS_VERSION-openbsd
+      cp dist-newstyle/build/x86_64-openbsd/ghc-*/darcs-$DARCS_VERSION/build/darcs/darcs ../darcs-openbsd
 artifacts:
-  - darcs-$DARCS_VERSION-openbsd
+  - darcs-openbsd
