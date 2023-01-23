@@ -4,9 +4,6 @@ packages:
   - cabal-install
 sources:
   - https://git.sr.ht/~willroe/darcs_build
-packages:
-  - ghc
-  - cabal-install
 environment:
   DARCS_VERSION: 2.18.3
 tasks:
