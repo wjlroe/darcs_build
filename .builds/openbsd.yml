@@ -1,4 +1,7 @@
 image: openbsd/latest
+packages:
+  - ghc
+  - cabal-install
 sources:
   - https://git.sr.ht/~willroe/darcs_build
 packages:
