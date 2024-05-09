@@ -1,4 +1,4 @@
-image: openbsd/7.1
+image: openbsd/7.5
 sources:
   - https://git.sr.ht/~willroe/darcs_build
 packages:
