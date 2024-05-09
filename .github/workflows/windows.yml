@@ -32,7 +32,8 @@ jobs:
           cd darcs-$Env:DARCS_VERSION
           cabal v2-update
           mkdir ~\bin -ea 0
-          cabal v2-install exe:darcs -f-curl -fstatic --install-method=copy --install-dir=~\bin
+          cabal v2-build exe:darcs -f-curl -fstatic
+          cabal v2-install exe:darcs --install-method=copy --install-dir=~\bin
           cp ~\bin\darcs.exe ..\darcs.exe
 
       - uses: actions/upload-artifact@v4
