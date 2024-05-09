@@ -50,7 +50,7 @@ jobs:
           cabal v2-build exe:darcs -f-curl -fstatic
           cp dist-newstyle/build/x86_64-windows/ghc-$env:GHC_VERSION/darcs-$Env:DARCS_VERSION/build/darcs/darcs.exe ../darcs.exe
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: darcs.exe
           path: darcs.exe
