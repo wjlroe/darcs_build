@@ -11,7 +11,7 @@ packages:
   - zlib-static
   - libffi-dev
 environment:
-  DARCS_VERSION: 2.16.5
+  DARCS_VERSION: 2.18.2
 tasks:
   - info: |
       uname -a
