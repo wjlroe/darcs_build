@@ -8,7 +8,7 @@ packages:
   - ghc
   - cabal-install
 environment:
-  DARCS_VERSION: 2.18.2
+  DARCS_VERSION: 2.18.3
 tasks:
   - info: |
       uname -a
