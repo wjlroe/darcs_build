@@ -13,7 +13,7 @@ jobs:
         uses: microsoft/setup-msbuild@v2.0.0
 
       - name: download older ghc
-        run: Invoke-WebRequest https://downloads.haskell.org/~ghc/9.8.2/ghc-9.8.2-x86_64-unknown-mingw32.tar.xz
+        run: Invoke-WebRequest https://downloads.haskell.org/~ghc/9.8.2/ghc-9.8.2-x86_64-unknown-mingw32.tar.xz -OutFile ghc-9.8.2-x86_64-unknown-mingw32.tar.xz
 
       - name: extract ghc
         run: tar -xvzf ghc-9.8.2-x86_64-unknown-mingw32.tar.xz
