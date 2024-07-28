@@ -12,15 +12,20 @@ jobs:
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v2.0.0
 
+      - name: download older ghc
+        run: Invoke-WebRequest https://downloads.haskell.org/~ghc/9.8.2/ghc-9.8.2-x86_64-unknown-mingw32.tar.xz
+
+      - name: extract ghc
+        run: tar -xvzf ghc-9.8.2-x86_64-unknown-mingw32.tar.xz
+
       - name: ghc details
         run: |
-          (Get-Command ghc).Source
-          ghc --version
+          ls
+          ghc-9.8.2-x86_64-unknown-mingw32\bin\ghc --version
 
       - name: cabal details
         run: |
-          (Get-Command cabal).Source
-          cabal --version
+          ghc-9.8.2-x86_64-unknown-mingw32\bin\cabal --version
 
       - name: Download the darcs source tarball
         run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-$Env:DARCS_VERSION/darcs-$Env:DARCS_VERSION.tar.gz -OutFile darcs-$Env:DARCS_VERSION.tar.gz
@@ -31,9 +36,9 @@ jobs:
       - name: build darcs
         run: |
           cd darcs-$Env:DARCS_VERSION
-          cabal v2-update
+          ghc-9.8.2-x86_64-unknown-mingw32\bin\cabal v2-update
           mkdir ~\bin -ea 0
-          cabal v2-install exe:darcs --install-method=copy --installdir=$env:USERPROFILE\bin -f-curl -fstatic
+          ghc-9.8.2-x86_64-unknown-mingw32\bin\cabal v2-install exe:darcs --install-method=copy --installdir=$env:USERPROFILE\bin -f-curl -fstatic
           ~\bin\darcs --version
           cp ~\bin\darcs.exe ..\darcs.exe
 
