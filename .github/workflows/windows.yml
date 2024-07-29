@@ -22,7 +22,7 @@ jobs:
       - name: extract ghc
         timeout-minutes: 2
         run: |
-          ls -lh
+          ls
           tar -xzf ghc-9.8.2-x86_64-unknown-mingw32.tar.xz
 
       - name: ghc details
