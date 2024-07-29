@@ -32,9 +32,9 @@ jobs:
       - name: build darcs
         run: |
           cd darcs-$Env:DARCS_VERSION
-          ghc-9.8.2-x86_64-unknown-mingw32\bin\cabal v2-update
+          cabal v2-update
           mkdir ~\bin -ea 0
-          ghc-9.8.2-x86_64-unknown-mingw32\bin\cabal v2-install exe:darcs --install-method=copy --installdir=$env:USERPROFILE\bin -f-curl -fstatic
+          cabal v2-install exe:darcs --install-method=copy --installdir=$env:USERPROFILE\bin -f-curl -fstatic
           ~\bin\darcs --version
           cp ~\bin\darcs.exe ..\darcs.exe
 
