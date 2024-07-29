@@ -16,7 +16,9 @@ jobs:
         run: Invoke-WebRequest https://downloads.haskell.org/~ghc/9.8.2/ghc-9.8.2-x86_64-unknown-mingw32.tar.xz -OutFile ghc-9.8.2-x86_64-unknown-mingw32.tar.xz
 
       - name: extract ghc
-        run: tar -xvzf ghc-9.8.2-x86_64-unknown-mingw32.tar.xz
+        run: |
+          ls -lh
+          tar -xzf ghc-9.8.2-x86_64-unknown-mingw32.tar.xz
 
       - name: ghc details
         run: |
