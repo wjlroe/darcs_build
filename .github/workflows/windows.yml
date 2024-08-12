@@ -1,26 +1,27 @@
 name: Build on Windows
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/windows.yml'
 
 jobs:
   build:
     runs-on: windows-2019
     env:
-      DARCS_VERSION: 2.18.2
+      DARCS_VERSION: 2.18.3
     steps:
       - uses: actions/checkout@v4
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v2.0.0
-
+      - uses: haskell-actions/setup@v2
+        with:
+          ghc-version: '9.8.2'
       - name: ghc details
-        run: |
-          (Get-Command ghc).Source
-          ghc --version
-
+        run: ghc --version
       - name: cabal details
-        run: |
-          (Get-Command cabal).Source
-          cabal --version
+        run: cabal --version
 
       - name: Download the darcs source tarball
         run: Invoke-WebRequest https://hackage.haskell.org/package/darcs-$Env:DARCS_VERSION/darcs-$Env:DARCS_VERSION.tar.gz -OutFile darcs-$Env:DARCS_VERSION.tar.gz
