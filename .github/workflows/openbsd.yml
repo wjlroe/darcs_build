@@ -1,0 +1,35 @@
+name: Build on OpenBSD
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/openbsd.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DARCS_VERSION: 2.18.5
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build on OpenBSD
+        uses: vmactions/openbsd-vm@v1
+        with:
+          envs: 'DARCS_VERSION'
+          prepare: |
+            pkg_add ghc cabal-install
+          run: |
+            pwd
+            sysctl hw.model
+            sysctl hw.ncpu
+            sysctl hw.physmem
+            sysctl hw.usermem
+            curl https://hackage.haskell.org/package/darcs-$DARCS_VERSION/darcs-$DARCS_VERSION.tar.gz -o darcs-$DARCS_VERSION.tar.gz
+            tar xvzf darcs-$DARCS_VERSION.tar.gz
+            cd darcs-$DARCS_VERSION
+            cabal v2-update
+            cabal v2-build exe:darcs
+            cp dist-newstyle/build/x86_64-openbsd/ghc-*/darcs-$DARCS_VERSION/build/darcs/darcs ../darcs-openbsd
+      - run: |
+          ls -lh
