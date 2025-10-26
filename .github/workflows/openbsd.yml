@@ -18,7 +18,7 @@ jobs:
         with:
           envs: 'DARCS_VERSION'
           prepare: |
-            pkg_add ghc cabal-install
+            pkg_add curl ghc cabal-install
           run: |
             pwd
             sysctl hw.model
