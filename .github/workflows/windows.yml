@@ -38,7 +38,7 @@ jobs:
           ~\bin\darcs --version
           cp ~\bin\darcs.exe ..\darcs.exe
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: darcs.exe
           path: darcs.exe
