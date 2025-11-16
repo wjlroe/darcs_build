@@ -29,7 +29,7 @@ jobs:
             tar xvzf darcs-$DARCS_VERSION.tar.gz
             cd darcs-$DARCS_VERSION
             cabal v2-update
-            cabal v2-build exe:darcs
+            cabal v2-build exe:darcs --constraint="splitmix < 0.1.3"
             cp dist-newstyle/build/x86_64-openbsd/ghc-*/darcs-$DARCS_VERSION/build/darcs/darcs ../darcs-openbsd
       - run: |
           ls -lh
