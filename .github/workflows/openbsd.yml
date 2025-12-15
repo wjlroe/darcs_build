@@ -40,7 +40,7 @@ jobs:
             rm darcs-$DARCS_VERSION.tar.gz
             rm -rf darcs-$DARCS_VERSION
       - run: ls -l
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: darcs-openbsd
           path: darcs-openbsd
